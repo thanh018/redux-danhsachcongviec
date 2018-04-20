@@ -1,0 +1,7 @@
+npm init
+
+npm install --save react-redux
+npm install --save react react-dom
+npm install --save redux
+npm install react-scripts -g
+npm start
