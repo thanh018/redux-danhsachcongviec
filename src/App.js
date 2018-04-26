@@ -7,20 +7,19 @@ import {connect} from 'react-redux';
 import * as actions from './actions/index';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isDisplayForm: false,
-            taskEditing: null,
-            filter : {
-                name: '',
-                status: -1
-            },
-            keyword: '',
-            sortBy: 'name',
-            sortValue: 1
-        }
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			taskEditing: null,
+			filter : {
+					name: '',
+					status: -1
+			},
+			keyword: '',
+			sortBy: 'name',
+			sortValue: 1
+		}
+	}
 
     // onGenerateData = () => {
     //     var tasks = [
