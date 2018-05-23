@@ -6,41 +6,36 @@ class TaskForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
-            name: '',
-            status: false,
+            
         }
     }
 
     componentWillMount() {
         // console.log('will mount');
-        if(this.props.task) {
+        if(this.props.editTask && this.props.editTask.id !== null) {
             this.setState({
-                id: this.props.task.id,
-                name: this.props.task.name,
-                status: this.props.task.status
+                id: this.props.editTask.id,
+                name: this.props.editTask.name,
+                status: this.props.editTask.status
             });
             //console.log(this.state);
+        }
+
+        else {
+            this.onClear();
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log('nextProps ' + nextProps);
-        if(nextProps && nextProps.task) {
+        if(nextProps && nextProps.editTask) {
             this.setState({
-                id: nextProps.task.id,
-                name: nextProps.task.name,
-                status: nextProps.task.status
+                id: nextProps.editTask.id,
+                name: nextProps.editTask.name,
+                status: nextProps.editTask.status
             });
-            //console.log(this.state);
         }
-        else if(nextProps && nextProps.task === null) {//  !nextProps.task
-            // console.log('sua -> them');
-            this.setState({
-                id: '',
-                name: '',
-                status: false,
-            });
+        else {
+            this.onClear();
         }
     }
 
@@ -60,23 +55,25 @@ class TaskForm extends Component {
         });
     }
 
-    onSubmit = (event) => {
+    onSave = (event) => {
         event.preventDefault();
-        //console.log(this.state);
-				// this.props.onSubmit(this.state);
-				this.props.onAddTask(this.state);
+        this.props.onSaveTask(this.state);
         this.onClear();
         this.onCloseForm();
     }
 
     onClear = () => {
+        console.log('onClear');
         this.setState({
+            id: '',
             name: '',
             status: false
         });
     }
   render() {
     var {id} = this.state;
+    if(!this.props.isDisplayForm) return null;
+    
     return (
         <div className="panel panel-warning">
             <div className="panel-heading">
@@ -90,7 +87,7 @@ class TaskForm extends Component {
                 </h3>
             </div>
             <div className="panel-body">
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.onSave}>
                     <div className="form-group">
                         <label>Tên :</label>
                         <input
@@ -134,13 +131,16 @@ class TaskForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-	return {}
+	return {
+        isDisplayForm: state.isDisplayForm,
+        editTask: state.editTask
+    }
 };
 
 const mapDispatchToProps = (dispatch, props) => {
 	return {
-		onAddTask: (task) => {
-			dispatch(actions.addTask(task));
+		onSaveTask: (task) => {
+			dispatch(actions.saveTask(task));
 		},
 		onCloseForm : () => {
 			dispatch(actions.closeForm());

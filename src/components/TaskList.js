@@ -28,12 +28,11 @@ class TaskList extends Component {
 		var { filterName, filterStatus } = this.props;
 		var eleTasks = tasks.map((task, index) => {
 				return <TaskItem
-									key={task.id}
-									index ={index}
-									task={task}
-									onDelete={this.props.onDelete}
-									onUpdate={this.props.onUpdate}
-								/>
+							key={task.id}
+							index ={index}
+							task={task}
+							onUpdate={this.props.onUpdate}
+						/>
 		});
 		return (
 				<table className="table table-bordered table-hover">

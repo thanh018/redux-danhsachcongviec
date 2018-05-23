@@ -54,18 +54,6 @@ class App extends Component {
     // }
 
     onToggleForm = () => {
-			// if(this.state.isDisplayForm && this.state.taskEditing !== null) {
-			//     this.setState({
-			//         isDisplayForm : true,
-			//         taskEditing: null
-			//     });
-			// }
-			// else {
-			//     this.setState({
-			//         isDisplayForm : !this.state.isDisplayForm,
-			//         taskEditing: null
-			//     });
-			// }
 			this.props.onToggleForm();
     }
 
@@ -94,21 +82,6 @@ class App extends Component {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-    // onUpdateStatusonUpdateStatus = (id) => {
-    //     //console.log(id);
-    //     var {tasks} = this.state;
-    //     var index = this.findIndex(id);
-    //     //console.log(index);
-
-    //     if(index !== -1) {
-    //         tasks[index].status = !tasks[index].status;
-    //         this.setState({
-    //             tasks : tasks
-    //         });
-    //         localStorage.setItem('tasks', JSON.stringify(tasks));
-    //     }
-    // }
-
     findIndex = (id) => {
         var {tasks} = this.state;
         var result = -1;
@@ -119,21 +92,6 @@ class App extends Component {
             }
         });
         return result;
-    }
-
-    onDelete = (id) => {
-        //console.log(id);
-        var index = this.findIndex(id);
-        var {tasks} = this.state;
-        //console.log(index);
-        if(index !== -1) {
-            tasks.splice(index, 1);
-            this.setState({
-                tasks : tasks
-            });
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-        this.onCloseForm();
     }
 
     onUpdate = (id) => {
@@ -176,14 +134,15 @@ class App extends Component {
 
     render() {
         var {
-            taskEditing,
+            // taskEditing,
             // filter,
             // keyword,
             sortBy,
             sortValue 
-				} = this.state; 
-				var {isDisplayForm} = this.props;
-				//var tasks = this.state.tasks
+        } = this.state; 
+        var {isDisplayForm} = this.props;
+
+		//var tasks = this.state.tasks
         //console.log(filter);
         // if(filter) {
         //     if(filter.name) {
@@ -222,12 +181,12 @@ class App extends Component {
         //     });
         // }
 
-        var eleTaskForm = isDisplayForm ?
-            <TaskForm
-                onSubmit = {this.onSubmit}
-                task = { taskEditing }
-            />
-            : '';
+        // var eleTaskForm = isDisplayForm ?
+        //     <TaskForm
+        //         onSubmit = {this.onSubmit}
+        //         task = { taskEditing }
+        //     />
+        //     : '';
         return (
             <div className="container">
                 <div className="text-center">
@@ -236,8 +195,9 @@ class App extends Component {
                 </div>
                 <div className="row">
                     <div className={isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4' : ''}>
-                        {/* {Form} */}
-                        {eleTaskForm}
+                        <TaskForm
+                            onSubmit = {this.onSubmit}
+                        />
                     </div>
 
                     <div className={isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
@@ -248,13 +208,13 @@ class App extends Component {
                         >
                             <span className="fa fa-plus mr-5"></span>Thêm Công Việc
                         </button>&nbsp;
-                        <button
+                        {/* <button
                             type="button"
                             className="btn btn-danger"
                             onClick={this.onGenerateData}
                             >
                             Gernerate Data
-                        </button>
+                        </button> */}
                         <Control
                             onSearch = {this.onSearch}
                             onSort ={this.onSort}
@@ -265,7 +225,6 @@ class App extends Component {
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <TaskList
-                                    onUpdateStatus = {this.onUpdateStatus}
                                     onDelete = {this.onDelete}
                                     onUpdate = {this.onUpdate}
                                     onFilter = {this.onFilter}
